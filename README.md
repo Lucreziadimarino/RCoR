@@ -13,10 +13,10 @@ Let $C_1,\ldots,C_n\in\mathcal S_{++}^{d}$ be SPD matrices, with eigendecomposit
 $$
 C_i=U_i\Lambda_i U_i^{\mathsf T},
 \qquad U_i\in O(d),\qquad
-\Lambda_i=\operatorname{diag}(\lambda_{i1},\ldots,\lambda_{id}).
+\Lambda_i=\mathrm{diag}(\lambda_{i1},\ldots,\lambda_{id}).
 $$
 
-The eigenvalues are ordered from largest to smallest. Each eigenvector is defined only up to its sign, so the matrix $U_i$ can be replaced by $U_i S_i$, where $S_i=\operatorname{diag}(s_{i1},\ldots,s_{id})$ and $s_{ij}\in\{-1,+1\}$, without changing $C_i$.
+The eigenvalues are ordered from largest to smallest. Each eigenvector is defined only up to its sign, so the matrix $U_i$ can be replaced by $U_i S_i$, where $S_i=\mathrm{diag}(s_{i1},\ldots,s_{id})$ and $s_{ij}\in\{-1,+1\}$, without changing $C_i$.
 
 The aim is to find a common orthogonal basis while resolving these sign ambiguities. Define the **signed sum**
 
@@ -68,7 +68,7 @@ The reference SPD matrix is obtained by taking the componentwise geometric mean 
 $$
 \ell_j=\exp\!\left(\frac1n\sum_{i=1}^{n}\log\lambda_{ij}\right),
 \qquad
-\boxed{\ M=\Gamma\operatorname{diag}(\ell_1,\ldots,\ell_d)\Gamma^{\mathsf T}\ }.
+\boxed{\ M=\Gamma\mathrm{diag}(\ell_1,\ldots,\ell_d)\Gamma^{\mathsf T}\ }.
 $$
 
 The implementations return **`M`**, **`Gamma` / `Γ`**, and the collection of **registered matrices `G` / `𝐆`**.
@@ -116,7 +116,7 @@ print(Gamma.shape)  # (3, 3)
 print(G.shape)      # (2, 3, 3)
 ```
 
-Main source: [`src/rcor_nuclear/core.py`](src/rcor_nuclear/core.py). Optional arguments are `tol=1e-12` and `maxiter=100`.
+Main source: [`python/rcor_nuclear/core.py`](python/rcor_nuclear/core.py). Optional arguments are `tol=1e-12` and `maxiter=100`.
 
 ### Julia
 
@@ -196,7 +196,7 @@ RCoR/
 │   ├── demo_scatter.py
 │   └── demo_scatter.ipynb
 ├── julia/RR_nuclear_optimized_final.jl
-├── src/rcor_nuclear/
+├── python/rcor_nuclear/
 │   ├── __init__.py
 │   └── core.py
 ├── pyproject.toml
