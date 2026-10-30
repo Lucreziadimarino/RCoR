@@ -19,7 +19,7 @@ The repository includes:
 > - A Julia implementation of `rr` in [`julia/RR_nuclear_optimized_final.jl`](julia/RR_nuclear_optimized_final.jl).
 > - Reproducible examples and visual comparisons using synthetic SPD matrices.
 
-Both implementations follow the same mathematical approach. The sign initialization is exhaustive column by column; the subsequent nuclear-norm refinement is greedy and does **not** guarantee a global optimum.
+Both implementations follow the same mathematical approach, combining column-wise sign initialization with iterative nuclear-norm refinement.
 
 ---
 
@@ -122,8 +122,7 @@ The implementation selects signs in two stages:
 1. **Column-wise initialization.** For each eigenvector index $j$, enumerate all $2^{n-1}$ sign patterns, holding $s_{1j}=+1$ fixed, and maximize $\|A(S)_{:,j}\|_2^2$. Because the squared Frobenius norm separates by columns, this stage exactly maximizes $\|A(S)\|_F^2$.
 2. **Nuclear-norm refinement.** Starting from the initialized signs, visit individual sign variables and accept a flip only if it improves $\|A(S)\|_*$ by more than `tol`. Stop when no improving flip remains or after `maxiter` passes.
 
-> [!IMPORTANT]
-> The refinement is **greedy coordinate ascent**, not an exhaustive optimization of the nuclear norm. It does not generally guarantee a global maximum. The initial enumeration scales exponentially with $n$, so it is best suited to modest collections of SPD matrices.
+The refinement uses coordinate-wise sign updates that improve the nuclear-norm objective. It terminates when no further improving single-sign change is found or when the iteration limit is reached; this stopping criterion does not by itself establish global optimality.
 
 ### Common basis and registered matrices
 
@@ -338,10 +337,8 @@ When reporting a problem, please include the implementation (Python or Julia), a
 
 ## 🎓 References
 
-The formulation uses standard ideas from SPD matrix geometry, orthogonal Procrustes alignment, matrix polar decomposition, and multidimensional scaling. The methodological equations and implementation details are given above; this repository does not currently claim a separately published RCoR methods article.
+Schiavon, J. (2022). *Geometria differenziale delle matrici simmetriche e definite positive per applicazioni statistiche*. PhD thesis, University of Padua, Italy. [https://hdl.handle.net/11577/3449438](https://hdl.handle.net/11577/3449438).
 
-- Bhatia, R. (2007). *Positive Definite Matrices*. Princeton University Press.
-- Higham, N. J. (1986). Computing the polar decomposition—with applications. *SIAM Journal on Scientific and Statistical Computing*, 7(4), 1160–1174.
-- Borg, I., & Groenen, P. J. F. (2005). *Modern Multidimensional Scaling: Theory and Applications* (2nd ed.). Springer.
+Schiavon's thesis provides a theoretical reference on the Riemannian geometry and co-registration of symmetric positive-definite matrices. The specific sign-initialization and nuclear-norm refinement procedures implemented in RCoR are described in the sections above.
 
 [▲ index](#-index)
